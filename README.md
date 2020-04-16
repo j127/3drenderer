@@ -1,4 +1,4 @@
-# 3D Game Programming from Scratch
+# 3drenderer
 
 ## Dependencies
 
@@ -11,7 +11,7 @@ $ sudo apt install libsdl2-dev
 
 ## Structure
 
-His preferred structure:
+Sample structure:
 
 ```text
 3drenderer
@@ -22,16 +22,13 @@ His preferred structure:
     └── mesh.h
 ```
 
+## Compiling
+
+The most simple:
 
 ```text
 $ gcc main.c -o renderer
 $ ./renderer
 ```
 
-It can get more complex like this:
-
-```text
-$ gcc -Wall -std=c99 src/*.c -o renderer
-$ ./renderer
-```
-
+See the `Makefile`.
