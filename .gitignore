@@ -4,6 +4,7 @@ renderer
 *~
 tags
 tags.*
+.vim/
 .idea/
 .vscode/
 *.sw[op]
