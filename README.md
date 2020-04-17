@@ -104,13 +104,12 @@ Some branches of the tree:
 
 ![Graphical projections](./assets/graphical-projections-cc.png)
 
+<small>_Graphical projections image used under CC licence from [here](https://en.wikipedia.org/wiki/File:Comparison_of_graphical_projections.svg)_</small>
+
+
 ### Isometric Projection
 
 True isometric projection has 120 degree angles between x, y, and z. Most "isometric" games use 126.87 degrees to make a 2:1 pixel ratio.
-
--------
-
-<small>Graphical projections image used under CC licence from [here](https://en.wikipedia.org/wiki/File:Comparison_of_graphical_projections.svg)</small>
 
 ### Perspective Divide
 
