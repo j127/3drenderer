@@ -128,7 +128,10 @@ void render(void) {
     SDL_RenderClear(renderer);
 
     draw_grid(100);
-    draw_rect(200, 200, 500, 500, 0xFF00FF33); /* Apple IIc green */
+    draw_rect(200, 200, 100, 100, 0xFF00FF33);  /* Apple IIc green */
+    draw_rect(600, 400, 150, 150, 0xFFF1C232);  /* Pikuma yellow */
+    draw_rect(900, 100, 60, 150, 0xFF000F89);   /* phthalo blue */
+    draw_rect(1200, 600, 150, 100, 0xFFE32636); /* alizarin crimson */
 
     render_color_buffer();
     clear_color_buffer(0xFF000000);
