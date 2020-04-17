@@ -153,3 +153,23 @@ Py    Pz
 P'y = --
       Pz
 ```
+
+### Coordinate System Handedness
+
+We're using a left-handed coordinate system here (`z` increases as you go deeper into the monitor). DirectX uses a left-handed coordinate system. OpenGL uses a right-handed coordinate system.
+
+### Transformations
+
+Frame-by-frame steps:
+
+- `process_input(void)`
+- `update(void)`
+    - `transform_points()`:
+        - `rotate(x, y, z)`
+        - `scale(amount)`
+        - `translate(amount)` (move objects around by x, y, z)
+    - `project_points(perspective)`
+- `render(void)`
+    - `draw_projected_points()`
+
+
