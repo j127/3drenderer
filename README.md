@@ -104,4 +104,7 @@ Parallel → Orthographic → Axonometric → Isometric
 Perspective → ...
 
 ![Graphical projections](./assets/graphical-projections-cc.png)
-<small>Image used with CC licence from [here](https://en.wikipedia.org/wiki/File:Comparison_of_graphical_projections.svg)</small>
+
+-------
+
+<small>Graphical projections image used under CC licence from [here](https://en.wikipedia.org/wiki/File:Comparison_of_graphical_projections.svg)</small>
