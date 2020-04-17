@@ -86,16 +86,27 @@ void update(void) {
 }
 
 /**
- * Draw a grid every 10 pixels by changing the color_buffer
+ * Draw a grid of dots every `spacing` pixels by changing the color_buffer
+ *
+ * spacing: how many pixels between each grid line
  */
-void draw_grid(void) {
-    for (int y = 0; y < window_height; y++) {
-        for (int x = 0; x < window_width; x++) {
-            // You could alternatively draw dots by incrementing by 10 instead
-            // of this.
-            if (x % 10 == 0 || y % 10 == 0) {
-                color_buffer[(window_width * y) + x] = 0xFF333333;
-            }
+void draw_grid(int spacing) {
+    for (int y = 0; y < window_height; y += spacing) {
+        for (int x = 0; x < window_width; x += spacing) {
+            color_buffer[(window_width * y) + x] = 0xFF333333;
+        }
+    }
+}
+
+/**
+ * Draw a rectangle on the screen.
+ */
+void draw_rect(int x, int y, int width, int height, uint32_t color) {
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            int cur_x = x + i;
+            int cur_y = y + j;
+            color_buffer[(window_width * cur_y) + cur_x] = color;
         }
     }
 }
@@ -116,7 +127,8 @@ void render(void) {
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_RenderClear(renderer);
 
-    draw_grid();
+    draw_grid(100);
+    draw_rect(200, 200, 500, 500, 0xFF00FF33); /* Apple IIc green */
 
     render_color_buffer();
     clear_color_buffer(0xFF000000);
