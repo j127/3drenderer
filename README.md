@@ -1,5 +1,7 @@
 # 3drenderer
 
+Learning about 3D graphics and C.
+
 ## Dependencies
 
 This installs GCC and the C dependencies along with SDL2.
@@ -104,7 +106,7 @@ Some branches of the tree:
 
 ![Graphical projections](./assets/graphical-projections-cc.png)
 
-<small>_Graphical projections image used under CC licence from [here](https://en.wikipedia.org/wiki/File:Comparison_of_graphical_projections.svg)_</small>
+<small>_Graphical projections image used under CC licence from [here](https://en.wikipedia.org/wiki/File:Comparison_of_graphical_projections.svg)._</small>
 
 
 ### Isometric Projection
