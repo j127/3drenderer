@@ -5,8 +5,14 @@
 #include "display.h"
 #include "vector.h"
 
-// global vars
 bool is_running = false;
+
+// Declare an array of vectors/points
+#define N_POINTS (9 * 9 * 9)  // 9x9x9 cube (729 vectors)
+vec3_t cube_points[N_POINTS];
+vec2_t projected_points[N_POINTS];
+
+float fov_factor = 128;  // Field of view factor
 
 void setup(void) {
     // Allocate the required memory in bytes to hold the color buffer
@@ -17,6 +23,20 @@ void setup(void) {
     color_buffer_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888,
                                              SDL_TEXTUREACCESS_STREAMING,
                                              window_width, window_height);
+
+    int point_count = 0;
+
+    // Start loading array of vectors
+    // From -1 to 1 (in the 9x9x9 cube)
+    for (float x = -1; x <= 1; x += 0.25) {
+        for (float y = -1; y <= 1; y += 0.25) {
+            for (float z = -1; z <= 1; z += 0.25) {
+                // The dot syntax assigns to the struct elements.
+                vec3_t new_point = {.x = x, .y = y, .z = z};
+                cube_points[point_count++] = new_point;
+            }
+        }
+    }
 }
 
 void process_input(void) {
@@ -33,22 +53,45 @@ void process_input(void) {
     }
 }
 
+/**
+ * Project 3D info on a screen (2D).
+ *
+ * Take a 3D vector and return a 2D vector.
+ */
+vec2_t project(vec3_t point) {
+    vec2_t projected_point = {.x = (fov_factor * point.x),
+                              .y = (fov_factor * point.y)};
+    return projected_point;
+}
+
 void update(void) {
-    // TODO:
+    for (int i = 0; i < N_POINTS; i++) {
+        vec3_t point = cube_points[i];
+
+        // Project the current point
+        vec2_t projected_point = project(point);
+
+        // Save the projected 2D vector
+        projected_points[i] = projected_point;
+    }
 }
 
 void render(void) {
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_RenderClear(renderer);
+    draw_grid(10);
 
-    draw_grid(100);
-    draw_rect(200, 200, 100, 100, 0xFF00FF33);  /* Apple IIc green */
-    draw_rect(600, 400, 150, 150, 0xFFF1C232);  /* Pikuma yellow */
-    draw_rect(900, 100, 60, 150, 0xFF000F89);   /* phthalo blue */
-    draw_rect(1200, 600, 150, 100, 0xFFE32636); /* alizarin crimson */
-    for (int i = 0; i < 600; i++) {
-        draw_pixel(i + 10, i + 30, 0xFFFFFF00);
+    for (int i = 0; i < N_POINTS; i++) {
+        vec2_t projected_point = projected_points[i];
+        draw_rect(projected_point.x + window_width / 2,
+                  projected_point.y + window_height / 2, 4, 4, 0xFFFFFF00);
     }
+
+    // draw_rect(200, 200, 100, 100, 0xFF00FF33);  /* Apple IIc green */
+    // draw_rect(600, 400, 150, 150, 0xFFF1C232);  /* Pikuma yellow */
+    // draw_rect(900, 100, 60, 150, 0xFF000F89);   /* phthalo blue */
+    // draw_rect(1200, 600, 150, 100, 0xFFE32636); /* alizarin crimson */
+    // for (int i = 0; i < 600; i++) {
+    //     draw_pixel(i + 10, i + 30, 0xFFFFFF00);
+    // }
 
     render_color_buffer();
     clear_color_buffer(0xFF000000);
@@ -61,8 +104,6 @@ int main(void) {
     is_running = initialize_window();
 
     setup();
-
-    vec3_t myvector = {2.0, 3.0, -4.0};
 
     while (is_running) {
         process_input();
