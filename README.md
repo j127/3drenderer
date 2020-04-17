@@ -99,11 +99,14 @@ camera_t mycam = {
 
 Some branches of the tree:
 
-Parallel → Orthographic → Axonometric → Isometric
-
-Perspective → ...
+- Parallel → Orthographic → Axonometric → Isometric
+- Perspective → ...
 
 ![Graphical projections](./assets/graphical-projections-cc.png)
+
+### Isometric Projection
+
+True isometric projection has 120 degree angles between x, y, and z. Most "isometric" games use 126.87 degrees to make a 2:1 pixel ratio.
 
 -------
 
