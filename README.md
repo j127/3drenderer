@@ -154,11 +154,11 @@ P'y = --
       Pz
 ```
 
-### Coordinate System Handedness
+## Coordinate System Handedness
 
 We're using a left-handed coordinate system here (`z` increases as you go deeper into the monitor). DirectX uses a left-handed coordinate system. OpenGL uses a right-handed coordinate system.
 
-### Transformations
+## Transformations
 
 Frame-by-frame steps:
 
@@ -172,4 +172,22 @@ Frame-by-frame steps:
 1. `render(void)`
     - `draw_projected_points()`
 
+## Trigonometric Functions
 
+Angle α:
+
+```text
+sin(α)=o/h
+cos(α)=a/h
+tan(α)=o/a
+```
+
+## Rotation Matrix
+
+```text
+┌             ┐   ┌   ┐
+│cos α -sin α │   │ x │
+│             │ * │   │
+│sin α  cos α │   │ y │
+└             ┘   └   ┘
+```
