@@ -162,14 +162,14 @@ We're using a left-handed coordinate system here (`z` increases as you go deeper
 
 Frame-by-frame steps:
 
-- `process_input(void)`
-- `update(void)`
+1. `process_input(void)`
+1. `update(void)`
     - `transform_points()`:
         - `rotate(x, y, z)`
         - `scale(amount)`
         - `translate(amount)` (move objects around by x, y, z)
     - `project_points(perspective)`
-- `render(void)`
+1. `render(void)`
     - `draw_projected_points()`
 
 
