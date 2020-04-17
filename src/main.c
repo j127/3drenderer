@@ -86,6 +86,21 @@ void update(void) {
 }
 
 /**
+ * Draw a grid every 10 pixels by changing the color_buffer
+ */
+void draw_grid(void) {
+    for (int y = 0; y < window_height; y++) {
+        for (int x = 0; x < window_width; x++) {
+            // You could alternatively draw dots by incrementing by 10 instead
+            // of this.
+            if (x % 10 == 0 || y % 10 == 0) {
+                color_buffer[(window_width * y) + x] = 0xFF333333;
+            }
+        }
+    }
+}
+
+/**
  * Set all the pixels in the window to the given color.
  */
 void clear_color_buffer(uint32_t color) {
@@ -101,8 +116,10 @@ void render(void) {
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_RenderClear(renderer);
 
+    draw_grid();
+
     render_color_buffer();
-    clear_color_buffer(0xFFFFFF00);
+    clear_color_buffer(0xFF000000);
 
     SDL_RenderPresent(renderer);
 }
