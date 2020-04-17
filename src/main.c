@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "display.h"
+#include "vector.h"
 
 // global vars
 bool is_running = false;
@@ -60,6 +61,8 @@ int main(void) {
     is_running = initialize_window();
 
     setup();
+
+    vec3_t myvector = {2.0, 3.0, -4.0};
 
     while (is_running) {
         process_input();
