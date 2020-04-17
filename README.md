@@ -99,8 +99,8 @@ camera_t mycam = {
 
 Some branches of the tree:
 
-- Parallel → Orthographic → Axonometric → Isometric
-- Perspective → ...
+- **Parallel** → Orthographic (→ Axonometric → Isometric)
+- **Perspective** -- uses a view frustum (the clipped pyramid of vision).
 
 ![Graphical projections](./assets/graphical-projections-cc.png)
 
@@ -111,3 +111,44 @@ True isometric projection has 120 degree angles between x, y, and z. Most "isome
 -------
 
 <small>Graphical projections image used under CC licence from [here](https://en.wikipedia.org/wiki/File:Comparison_of_graphical_projections.svg)</small>
+
+### Perspective Divide
+
+Two similar triangles ABC (between eye and 2D viweing plane or screen) and ADE (between eye and 3D object):
+
+```text
+BC   AB
+-- = --
+DE   AD
+```
+
+In his diagram, `P'x` is the width of the object on the screen (viewed from above), `Px` is the real width of the 3D object, and `Pz` is the real distance to the 3D object.
+
+```text
+P'x   1
+--- = --
+Px    Pz
+```
+
+so, the width of the object on the screen (`P'x`) is the real width of the 3D object (`Px`) over the distance to the 3D object (`Pz`):
+
+```text
+      Px
+P'x = --
+      Pz
+```
+
+The farther away the object is, the greater the denominator and the smaller `P'x` will be.
+
+It's the same calculation for y:
+
+```text
+P'y   1
+--- = --
+Py    Pz
+```
+```text
+      Py
+P'y = --
+      Pz
+```
