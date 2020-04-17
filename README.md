@@ -86,7 +86,7 @@ typedef struct {
     vec3_t fov_angle;
 } camera_t;
 
-camera_t mycamp = {
+camera_t mycam = {
     { 0, 0, 0 },
     { 0.3, -2.0, 0.0 },
     0.78
@@ -99,7 +99,7 @@ camera_t mycamp = {
 
 Some branches of the tree:
 
-Parallel → Orthographic → Axonometric -> Isometric
+Parallel → Orthographic → Axonometric → Isometric
 
 Perspective → ...
 
