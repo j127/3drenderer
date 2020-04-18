@@ -258,6 +258,7 @@ Those will come up again later in rotation matrices:
 │             │ * │   │
 │sin α  cos α │   │ y │
 └             ┘   └   ┘
+```
 
 ### 3D Vector Rotation
 
