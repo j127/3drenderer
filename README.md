@@ -280,7 +280,7 @@ vec3_t vec3_rotate_y(vec3_t v, float angle) { // angle is β
         .x = v.x * cos(angle) - v.z * sin(angle),
         .y = v.y,
         .z = v.x * sin(angle) + v.z * cos(angle)
-    }
+    };
     return rotated_vector;
 }
 ```
