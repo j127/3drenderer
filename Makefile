@@ -1,5 +1,6 @@
 build:
-	gcc -Wall -std=c99 ./src/*.c -lSDL2 -o renderer
+	# -lm links to the math libraries because of <math.h>
+	gcc -Wall -std=c99 ./src/*.c -lSDL2 -lm -o renderer
 
 run:
 	./renderer
