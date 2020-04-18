@@ -191,3 +191,95 @@ tan(α)=o/a
 │sin α  cos α │   │ y │
 └             ┘   └   ┘
 ```
+
+### 2D Vector Rotation
+
+The right triangle that a vector's (`(x, y)`) angle `α` makes with `x` as its adjacent side can be rotated by angle β. The hypotenuse of that triangle can be called `r` because it forms the radius of a circle as the vector rotates.
+
+So the length of the adjacent side of the triangle is `x` and the length of the opposite side is `y`.
+
+For the original vector:
+
+- `cos(α)=x/r` -- so `x=r*cos(α)`
+- `sin(α)=y/r` -- so `y=r*sin(α)`
+
+If you rotate the angle of the vector by β, the new vector's angle will be α+β. The length of the hypotenuse remains the same (`r`, representing the rotation circle's radius).
+
+That gives us `cos(α+β)=x'/r` and `sin(α+β)=y'/r`, and we know all the values except for `x'` and `y'`:
+
+- `x'=r*cos(α+β)`
+- `y'=r*sin(α+β)`
+
+or using angle addition formula for cosine:
+
+```text
+x'=r(cosα cosβ - sinα sinβ)
+```
+
+which is:
+
+```text
+r cosα cosβ - r sinα sinβ
+```
+
+and since we already know that `r cosα = x` and `r sinα = y`, we get the final formula that is found in rotation matrices:
+
+```text
+x'=x cosβ - y sinβ
+```
+
+It's similar for `y'`. We started with:
+
+- `y'=r*sin(α+β)`
+
+Use the angle addition formula for sine:
+
+```text
+y'=r(sinα cosβ + cosα sinβ)
+```
+
+which is:
+
+```text
+y'=r sinα cosβ + r cosα sinβ
+```
+
+and since we already know that `r sinα = y` and `r cosα = x`, we get:
+
+```text
+y'=y cosβ + x sinβ
+```
+
+Those will come up again later in rotation matrices:
+
+```text
+┌             ┐   ┌   ┐
+│cos α -sin α │   │ x │
+│             │ * │   │
+│sin α  cos α │   │ y │
+└             ┘   └   ┘
+
+### 3D Vector Rotation
+
+- To rotate around x, x gets locked and everything rotates around x
+- To rotate around y, y gets locked and everything rotates around y
+- To rotate around z, z gets locked and everything rotates around z
+
+Example:
+
+To rotate around y:
+
+- `x'=x cosβ - z sinβ`
+- `y'=y` (no change)
+- `z'=x sinβ + z cosβ`
+
+```c
+vec3_t vec3_rotate_y(vec3_t v, float angle) { // angle is β
+    vec3_t rotated_vector = {
+        .x = v.x * cos(angle) - v.z * sin(angle),
+        .y = v.y,
+        .z = v.x * sin(angle) + v.z * cos(angle)
+    }
+    return rotated_vector;
+}
+```
