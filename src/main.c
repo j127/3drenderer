@@ -6,6 +6,7 @@
 #include "vector.h"
 
 bool is_running = false;
+int previous_frame_time = 0;  // This will be milliseconds.
 
 // Declare an array of vectors/points
 #define N_POINTS (9 * 9 * 9)  // 9x9x9 cube (729 vectors)
@@ -68,9 +69,15 @@ vec2_t project(vec3_t point) {
 }
 
 void update(void) {
-    cube_rotation.x += 0.001;
-    cube_rotation.y += 0.007;
-    cube_rotation.z += 0.002;
+    // This locks the execution to match the desired FPS.
+    while (!SDL_TICKS_PASSED(SDL_GetTicks(),
+                             previous_frame_time + FRAME_TARGET_TIME))
+        ;
+    previous_frame_time = SDL_GetTicks();
+
+    cube_rotation.x += 0.002;
+    cube_rotation.y += 0.01;
+    cube_rotation.z += 0.004;
 
     for (int i = 0; i < N_POINTS; i++) {
         vec3_t point = cube_points[i];

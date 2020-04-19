@@ -5,6 +5,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+// This could be 30, 60, 200 FPS or whatever you want.
+#define FPS 200
+#define FRAME_TARGET_TIME (1000 / FPS)
+
 extern SDL_Window* window;
 extern SDL_Renderer* renderer;
 extern uint32_t* color_buffer;
