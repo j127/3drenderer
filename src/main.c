@@ -3,15 +3,13 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "display.h"
+#include "mesh.h"
 #include "vector.h"
 
 bool is_running = false;
 int previous_frame_time = 0;  // This will be milliseconds.
 
-// Declare an array of vectors/points
-#define N_POINTS (9 * 9 * 9)  // 9x9x9 cube (729 vectors)
-vec3_t cube_points[N_POINTS];
-vec2_t projected_points[N_POINTS];
+triangle_t triangles_to_render[N_MESH_FACES];
 
 vec3_t camera_position = {.x = 0, .y = 0, .z = -5};
 vec3_t cube_rotation = {.x = 0, .y = 0, .z = 0};
@@ -27,20 +25,6 @@ void setup(void) {
     color_buffer_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888,
                                              SDL_TEXTUREACCESS_STREAMING,
                                              window_width, window_height);
-
-    int point_count = 0;
-
-    // Start loading array of vectors
-    // From -1 to 1 (in the 9x9x9 cube)
-    for (float x = -1; x <= 1; x += 0.25) {
-        for (float y = -1; y <= 1; y += 0.25) {
-            for (float z = -1; z <= 1; z += 0.25) {
-                // The dot syntax assigns to the struct elements.
-                vec3_t new_point = {.x = x, .y = y, .z = z};
-                cube_points[point_count++] = new_point;
-            }
-        }
-    }
 }
 
 void process_input(void) {
@@ -83,31 +67,54 @@ void update(void) {
     cube_rotation.y += 0.01;
     cube_rotation.z += 0.004;
 
-    for (int i = 0; i < N_POINTS; i++) {
-        vec3_t point = cube_points[i];
+    // Loop over all the triangle faces of the mesh
+    for (int i = 0; i < N_MESH_FACES; i++) {
+        face_t mesh_face = mesh_faces[i];
 
-        vec3_t transformed_point = vec3_rotate_x(point, cube_rotation.x);
-        transformed_point = vec3_rotate_y(transformed_point, cube_rotation.y);
-        transformed_point = vec3_rotate_z(transformed_point, cube_rotation.z);
+        vec3_t face_vertices[3];
+        face_vertices[0] = mesh_vertices[mesh_face.a - 1];
+        face_vertices[1] = mesh_vertices[mesh_face.b - 1];
+        face_vertices[2] = mesh_vertices[mesh_face.c - 1];
 
-        // Translate the points away from the camera
-        transformed_point.z -= camera_position.z;
+        triangle_t projected_triangle;
 
-        // Project the current point
-        vec2_t projected_point = project(transformed_point);
+        // Loop over the vertices and apply transformations
+        for (int j = 0; j < 3; j++) {
+            vec3_t transformed_vertex = face_vertices[j];
 
-        // Save the projected 2D vector
-        projected_points[i] = projected_point;
+            transformed_vertex =
+                vec3_rotate_x(transformed_vertex, cube_rotation.x);
+            transformed_vertex =
+                vec3_rotate_y(transformed_vertex, cube_rotation.y);
+            transformed_vertex =
+                vec3_rotate_z(transformed_vertex, cube_rotation.z);
+
+            // Translate the vertex away from the camera
+            transformed_vertex.z -= camera_position.z;
+
+            // Project the current vertex
+            vec2_t projected_point = project(transformed_vertex);
+
+            // Scale and translate the projected points to the middle of the screen
+            projected_point.x += (window_width / 2);
+            projected_point.y += (window_height / 2);
+
+            projected_triangle.points[j] = projected_point;
+        }
+
+        // Save the projected triangle in the array of triangles to render
+        triangles_to_render[i] = projected_triangle;
     }
 }
 
 void render(void) {
     draw_grid(10);
 
-    for (int i = 0; i < N_POINTS; i++) {
-        vec2_t projected_point = projected_points[i];
-        draw_rect(projected_point.x + window_width / 2,
-                  projected_point.y + window_height / 2, 4, 4, 0xFFFFFF00);
+    for (int i = 0; i < N_MESH_FACES; i++) {
+        triangle_t triangle = triangles_to_render[i];
+        draw_rect(triangle.points[0].x, triangle.points[0].y, 3, 3, 0XFF00FF33);
+        draw_rect(triangle.points[1].x, triangle.points[1].y, 3, 3, 0XFF00FF33);
+        draw_rect(triangle.points[2].x, triangle.points[2].y, 3, 3, 0XFF00FF33);
     }
 
     // draw_rect(200, 200, 100, 100, 0xFF00FF33);  /* Apple IIc green */
