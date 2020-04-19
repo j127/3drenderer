@@ -70,9 +70,13 @@ vec2_t project(vec3_t point) {
 
 void update(void) {
     // This locks the execution to match the desired FPS.
-    while (!SDL_TICKS_PASSED(SDL_GetTicks(),
-                             previous_frame_time + FRAME_TARGET_TIME))
-        ;  // The autoformatter puts the semicolon here. 🤔
+    int time_to_wait =
+        FRAME_TARGET_TIME - (SDL_GetTicks() - previous_frame_time);
+
+    if (time_to_wait > 0 && time_to_wait <= FRAME_TARGET_TIME) {
+        SDL_Delay(time_to_wait);
+    }
+
     previous_frame_time = SDL_GetTicks();
 
     cube_rotation.x += 0.002;
