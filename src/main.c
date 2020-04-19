@@ -72,7 +72,7 @@ void update(void) {
     // This locks the execution to match the desired FPS.
     while (!SDL_TICKS_PASSED(SDL_GetTicks(),
                              previous_frame_time + FRAME_TARGET_TIME))
-        ;
+        ;  // The autoformatter puts the semicolon here. 🤔
     previous_frame_time = SDL_GetTicks();
 
     cube_rotation.x += 0.002;
