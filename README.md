@@ -284,3 +284,36 @@ vec3_t vec3_rotate_y(vec3_t v, float angle) { // angle is β
     return rotated_vector;
 }
 ```
+
+## Lines
+
+y is slope times x plus y-intercept:
+
+```text
+y=mx+c
+```
+
+Rise/run:
+
+```text
+    Δy
+m = --
+    Δx
+```
+
+which is:
+
+```text
+tan(α)= opposite/adjacent
+```
+
+If Δy/Δy=1, it's 45 degress. A descending line is <0.
+
+### Two Algorithms
+
+- Digital Differential Analyzer (DDA)
+- Bresenham
+
+#### DDA
+
+

@@ -6,6 +6,16 @@
 #include "mesh.h"
 #include "vector.h"
 
+///////////////////////
+// Palette Reference //
+///////////////////////
+// 0xFF00FF33  Apple IIc green
+// 0xFF33FF33  Apple II green
+// 0xFFFFB000  amber monitor
+// 0xFFF1C232  Pikuma yellow
+// 0xFF000F89  phthalo blue
+// 0xFFE32636  alizarin crimson
+
 bool is_running = false;
 int previous_frame_time = 0;  // This will be milliseconds.
 
@@ -95,7 +105,8 @@ void update(void) {
             // Project the current vertex
             vec2_t projected_point = project(transformed_vertex);
 
-            // Scale and translate the projected points to the middle of the screen
+            // Scale and translate the projected points to the middle of the
+            // screen
             projected_point.x += (window_width / 2);
             projected_point.y += (window_height / 2);
 
@@ -110,20 +121,23 @@ void update(void) {
 void render(void) {
     draw_grid(10);
 
+    uint32_t line_color = 0xFF33FF33;   // green
+    uint32_t point_color = 0xFFFFB000;  // amber
+
     for (int i = 0; i < N_MESH_FACES; i++) {
         triangle_t triangle = triangles_to_render[i];
-        draw_rect(triangle.points[0].x, triangle.points[0].y, 3, 3, 0XFF00FF33);
-        draw_rect(triangle.points[1].x, triangle.points[1].y, 3, 3, 0XFF00FF33);
-        draw_rect(triangle.points[2].x, triangle.points[2].y, 3, 3, 0XFF00FF33);
-    }
 
-    // draw_rect(200, 200, 100, 100, 0xFF00FF33);  /* Apple IIc green */
-    // draw_rect(600, 400, 150, 150, 0xFFF1C232);  /* Pikuma yellow */
-    // draw_rect(900, 100, 60, 150, 0xFF000F89);   /* phthalo blue */
-    // draw_rect(1200, 600, 150, 100, 0xFFE32636); /* alizarin crimson */
-    // for (int i = 0; i < 600; i++) {
-    //     draw_pixel(i + 10, i + 30, 0xFFFFFF00);
-    // }
+        draw_triangle(triangle.points[0].x, triangle.points[0].y,
+                      triangle.points[1].x, triangle.points[1].y,
+                      triangle.points[2].x, triangle.points[2].y, line_color);
+
+        draw_rect(triangle.points[0].x, triangle.points[0].y, 3, 3,
+                  point_color);
+        draw_rect(triangle.points[1].x, triangle.points[1].y, 3, 3,
+                  point_color);
+        draw_rect(triangle.points[2].x, triangle.points[2].y, 3, 3,
+                  point_color);
+    }
 
     render_color_buffer();
     clear_color_buffer(0xFF000000);
