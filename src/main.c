@@ -82,7 +82,7 @@ void update(void) {
 
     mesh.rotation.x += 0.01;
     mesh.rotation.y += 0.00;
-    mesh.rotation.z += 0.001;
+    mesh.rotation.z += 0.00;
 
     // Loop over all the triangle faces of the mesh
     int num_faces = array_length(mesh.faces);
