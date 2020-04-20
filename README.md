@@ -311,9 +311,26 @@ If Δy/Δy=1, it's 45 degress. A descending line is <0.
 
 ### Two Algorithms
 
-- Digital Differential Analyzer (DDA)
-- Bresenham
+- Digital Differential Analyzer (DDA) -- the code uses this algorithm.
+- Bresenham -- division is a slow operation, so this avoids it (?)
 
-#### DDA
+## Backface Culling
 
+Pythagorean theorem: $h^2=o^2+a^2$
 
+So the magnitude of the vector (hypotenuse) is the square root of the squares of adjacent and opposite sides.
+
+```text
+       __________________
+‖v‖ = ✓ (v.x)^2 + (v.y)^2
+```
+
+### Vector Calculations
+
+#### Addition
+
+To visualize adding vectors a and b, move b to the end of a, and measure the length from the original origin to the tip of b. So just add the `x`s and add the `y`s.
+
+#### Subtraction
+
+_To visualize_ vector subtraction, invert vector b (point in opposite direction) and then add the vectors (a + -b).
