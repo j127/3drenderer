@@ -350,7 +350,7 @@ The normal.
 ```c
 // example
 vec3_t cross_product(vec3_t a, vec3_t b) {
-    vec3_t normal = {
+    vec3_t result = {
         .x = a.y * b.z - a.z * b.y,
         .y = a.z * b.x - a.x * b.z,
         .z = a.x * b.y - a.y * b.x
