@@ -1,5 +1,6 @@
 #include "mesh.h"
 #include <stdio.h>
+#include <string.h>
 #include "array.h"
 
 mesh_t mesh = {.vertices = NULL, .faces = NULL, .rotation = {0, 0, 0}};
@@ -48,5 +49,47 @@ void load_cube_mesh_data(void) {
     for (int i = 0; i < N_CUBE_FACES; i++) {
         face_t cube_face = cube_faces[i];
         array_push(mesh.faces, cube_face);
+    }
+}
+
+/**
+ * Load mesh data from an obj file.
+ */
+void load_obj_file_data(char* filename) {
+    FILE* file;
+    int max_char = 1024;
+    char line[max_char];
+
+    file = fopen(filename, "r");
+
+    if (file == NULL) {
+        printf("file not found: %s", filename);
+    }
+
+    while (fgets(line, max_char, file)) {
+        // Look for vertex information
+        if (strncmp(line, "v ", 2) == 0) {
+            vec3_t vertex;
+            sscanf(line, "v %f %f %f", &vertex.x, &vertex.y, &vertex.z);
+            array_push(mesh.vertices, vertex);
+        }
+
+        // Look for face information
+        if (strncmp(line, "f ", 2) == 0) {
+            int vertex_indices[3];
+            int texture_indices[3];
+            int normal_indices[3];
+
+            sscanf(line, "f %d/%d/%d %d/%d/%d %d/%d/%d", &vertex_indices[0],
+                   &texture_indices[0], &normal_indices[0], &vertex_indices[1],
+                   &texture_indices[1], &normal_indices[1], &vertex_indices[2],
+                   &texture_indices[2], &normal_indices[2]);
+
+            face_t face = {.a = vertex_indices[0],
+                           .b = vertex_indices[1],
+                           .c = vertex_indices[2]};
+
+            array_push(mesh.faces, face);
+        }
     }
 }
