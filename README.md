@@ -334,3 +334,37 @@ To visualize adding vectors a and b, move b to the end of a, and measure the len
 #### Subtraction
 
 _To visualize_ vector subtraction, invert vector b (point in opposite direction) and then add the vectors (a + -b).
+
+#### Multiplication and Division
+
+By a scalar (see the code).
+
+#### Vector Cross Product
+
+Produces another vector that is perpendicular to both a and b.
+
+a⨯b and b⨯a go in different directions.
+
+The normal.
+
+```c
+// example
+vec3_t cross_product(vec3_t a, vec3_t b) {
+    vec3_t normal = {
+        .x = a.y * b.z - a.z * b.y,
+        .y = a.z * b.x - a.x * b.z,
+        .z = a.x * b.y - a.y * b.x
+    };
+    return result;
+}
+```
+
+The magnitude of the cross product relates to the area of the parallelogram. When a and b are exactly the same, the cross product is zero.
+
+The magnitude of the cross product is the magnitude of a times the magnitude of b times the sine of the angle (θ) between a and b:
+
+```text
+‖a⨯b‖ = ‖a‖ ‖b‖ sinθ
+```
+
+To get the normal: (a - b) ⨯ (a - c)
