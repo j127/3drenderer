@@ -104,7 +104,7 @@ Some branches of the tree:
 - **Parallel** → Orthographic (→ Axonometric → Isometric)
 - **Perspective** -- uses a view frustum (the clipped pyramid of vision).
 
-![Graphical projections](./assets/graphical-projections-cc.png)
+![Graphical projections](./images/graphical-projections-cc.png)
 
 <small>_Graphical projections image used under CC licence from [here](https://en.wikipedia.org/wiki/File:Comparison_of_graphical_projections.svg)._</small>
 
@@ -397,4 +397,29 @@ When you don't need to know the magnitude of a vector, you can normalize it by t
      a
 â = ---
     ‖a‖
+```
+
+### Filling Triangles
+
+Scanline fill -- scan each line from the top the to bottom and draw lines to fill the triangle.
+
+Flat-top + flat-bottom technique.
+
+```text
+    (x0,y0)
+      /\
+     /  \
+    /____\    ↔imagine that (x2,y2) is below (x1, y1)
+(x1,y1) (x2,y2)
+```
+By "top-to-bottom" it means that first they should be sorted by `y` values: `y0 < y1 < y2`.
+
+The triangle is then split along the y-axis at (x1, y1) which crosses on the right side at a point (Mx,My). (He uses "M" for "midpoint".)
+
+Use the ratio of similar triangles:
+
+```text
+Mx - x0   y1 - y0
+------- = -------
+x2 - x0   y2 - y0
 ```
