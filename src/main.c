@@ -165,8 +165,8 @@ void update(void) {
 void render(void) {
     draw_grid(10);
 
-    uint32_t line_color = 0xFF33FF33;  // green
-    /* uint32_t point_color = 0xFFFFB000;  // amber */
+    // uint32_t line_color = 0xFF33FF33;  // green
+    // uint32_t point_color = 0xFFFFB000;  // amber
 
     // draw_filled_triangle(300, 100, 50, 400, 500, 700, 0xFF00FF00);
 
@@ -177,7 +177,7 @@ void render(void) {
         draw_filled_triangle(triangle.points[0].x, triangle.points[0].y,
                              triangle.points[1].x, triangle.points[1].y,
                              triangle.points[2].x, triangle.points[2].y,
-                             0xFF555555);
+                             0xFF999999);
 
         draw_triangle(triangle.points[0].x, triangle.points[0].y,
                       triangle.points[1].x, triangle.points[1].y,
