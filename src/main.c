@@ -168,22 +168,27 @@ void render(void) {
     uint32_t line_color = 0xFF33FF33;  // green
     /* uint32_t point_color = 0xFFFFB000;  // amber */
 
-    int num_triangles = array_length(triangles_to_render);
+    draw_filled_triangle(300, 100, 50, 400, 500, 700, 0xFF00FF00);
 
-    for (int i = 0; i < num_triangles; i++) {
-        triangle_t triangle = triangles_to_render[i];
+    /* int num_triangles = array_length(triangles_to_render); */
+    /* for (int i = 0; i < num_triangles; i++) { */
+    /*     triangle_t triangle = triangles_to_render[i]; */
 
-        draw_triangle(triangle.points[0].x, triangle.points[0].y,
-                      triangle.points[1].x, triangle.points[1].y,
-                      triangle.points[2].x, triangle.points[2].y, line_color);
+    /*     draw_triangle(triangle.points[0].x, triangle.points[0].y, */
+    /*                   triangle.points[1].x, triangle.points[1].y, */
+    /*                   triangle.points[2].x, triangle.points[2].y,
+     * line_color); */
 
-        /* draw_rect(triangle.points[0].x, triangle.points[0].y, 3, 3, */
-        /*           point_color); */
-        /* draw_rect(triangle.points[1].x, triangle.points[1].y, 3, 3, */
-        /*           point_color); */
-        /* draw_rect(triangle.points[2].x, triangle.points[2].y, 3, 3, */
-        /*           point_color); */
-    }
+    /*     /1* draw_rect(triangle.points[0].x, triangle.points[0].y, 3, 3, *1/
+     */
+    /*     /1*           point_color); *1/ */
+    /*     /1* draw_rect(triangle.points[1].x, triangle.points[1].y, 3, 3, *1/
+     */
+    /*     /1*           point_color); *1/ */
+    /*     /1* draw_rect(triangle.points[2].x, triangle.points[2].y, 3, 3, *1/
+     */
+    /*     /1*           point_color); *1/ */
+    /* } */
 
     // Clear the array of triangles to render every frame loop
     array_free(triangles_to_render);

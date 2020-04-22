@@ -406,11 +406,22 @@ Scanline fill -- scan each line from the top the to bottom and draw lines to fil
 Flat-top + flat-bottom technique.
 
 ```text
-    (x0,y0)
-      /\
-     /  \
-    /____\    ↔imagine that (x2,y2) is below (x1, y1)
-(x1,y1) (x2,y2)
+          (x0, y0)
+             /\
+            /  \
+           /    \
+          /      \
+         /        \
+    (x1,y1)------(Mx,My)
+        \_          \
+           \_        \
+              \_      \
+                 \_    \
+                   \    \
+                     \_  \
+                        \_\
+                           \
+                        (x2,y2)
 ```
 By "top-to-bottom" it means that first they should be sorted by `y` values: `y0 < y1 < y2`.
 
@@ -422,4 +433,14 @@ Use the ratio of similar triangles:
 Mx - x0   y1 - y0
 ------- = -------
 x2 - x0   y2 - y0
+
+or:
+
+(Mx - x0)(y2 - y0) = (x2 - x0)(y1 - y0)
+
+Gives the formula:
+
+     (x2 - x0)(y1 - y0)
+Mx = ------------------ + x0
+          (y2 - y0)
 ```
