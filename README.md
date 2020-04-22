@@ -383,4 +383,18 @@ a·b = a_x b_x + a_y b_y
 
 The cross product shows where the face is pointing. The dot product shows whether the face is aligned with the camera.
 
+(Not perfect, but the backfaces are removed.)
+
 ![Backface culling in 3D model of a jet](./images/jet-backface-culling.gif)
+
+#### Normalizing Vectors
+
+When you don't need to know the magnitude of a vector, you can normalize it by turning it into a unit vector (length=1).
+
+(The `a`s on the right side should have arrows on top, but I don't know the unicode character for that.)
+
+```text
+     a
+â = ---
+    ‖a‖
+```

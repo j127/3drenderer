@@ -119,13 +119,16 @@ void update(void) {
         vec3_t vector_b = transformed_vertices[1]; /*  / \  */
         vec3_t vector_c = transformed_vertices[2]; /* B---C */
 
-        // Get the vector subtraction of A-B and A-C
+        // Get the vector subtraction of A-B and A-C, then normalize them.
         vec3_t vector_ab = vec3_sub(vector_a, vector_b);
         vec3_t vector_ac = vec3_sub(vector_a, vector_c);
+        vec3_normalize(&vector_ab);
+        vec3_normalize(&vector_ac);
 
         // Compute the face normal using the cross product to find the
-        // perpendicular vector
+        // perpendicular vector. Then normalize it.
         vec3_t normal = vec3_cross(vector_ab, vector_ac);
+        vec3_normalize(&normal);
 
         // Find the vector between point a and the camera position
         vec3_t camera_ray = vec3_sub(camera_position, vector_a);
