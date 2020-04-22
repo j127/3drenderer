@@ -382,3 +382,5 @@ a·b = a_x b_x + a_y b_y
 #### Culling Algorithm
 
 The cross product shows where the face is pointing. The dot product shows whether the face is aligned with the camera.
+
+![Backface culling in 3D model of a jet](./images/jet-backface-culling.gif)

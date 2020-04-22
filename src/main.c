@@ -23,7 +23,7 @@ int previous_frame_time = 0;  // This will be milliseconds.
 // An array of triangles that should be rendered frame by frame.
 triangle_t* triangles_to_render = NULL;
 
-vec3_t camera_position = {.x = 0, .y = 0, .z = -5};
+vec3_t camera_position = {.x = 0, .y = 0, .z = 0};
 
 float fov_factor = 640;  // Field of view factor
 
@@ -39,12 +39,6 @@ void setup(void) {
 
     /* load_cube_mesh_data(); */
     load_obj_file_data("./assets/f22.obj");
-
-    vec3_t a = {2.5, 6.4, 3.0};
-    vec3_t b = {-2.2, 1.4, -1.0};
-    float a_length = vec3_length(a);
-    float b_length = vec3_length(b);
-    vec3_t add_ab = vec3_add(a, b);
 }
 
 void process_input(void) {
@@ -87,8 +81,8 @@ void update(void) {
     triangles_to_render = NULL;  // reset
 
     mesh.rotation.x += 0.01;
-    mesh.rotation.y += 0.00;
-    mesh.rotation.z += 0.00;
+    mesh.rotation.y += 0.005;
+    mesh.rotation.z += 0.0001;
 
     // Loop over all the triangle faces of the mesh
     int num_faces = array_length(mesh.faces);
@@ -100,7 +94,7 @@ void update(void) {
         face_vertices[1] = mesh.vertices[mesh_face.b - 1];
         face_vertices[2] = mesh.vertices[mesh_face.c - 1];
 
-        triangle_t projected_triangle;
+        vec3_t transformed_vertices[3];
 
         // Loop over the vertices and apply transformations
         for (int j = 0; j < 3; j++) {
@@ -114,10 +108,43 @@ void update(void) {
                 vec3_rotate_z(transformed_vertex, mesh.rotation.z);
 
             // Translate the vertex away from the camera
-            transformed_vertex.z -= camera_position.z;
+            transformed_vertex.z += 5;
 
+            // Save the transformed_vertex in the array of transformed_vertices
+            transformed_vertices[j] = transformed_vertex;
+        }
+
+        // Backface culling
+        vec3_t vector_a = transformed_vertices[0]; /*   A   */
+        vec3_t vector_b = transformed_vertices[1]; /*  / \  */
+        vec3_t vector_c = transformed_vertices[2]; /* B---C */
+
+        // Get the vector subtraction of A-B and A-C
+        vec3_t vector_ab = vec3_sub(vector_a, vector_b);
+        vec3_t vector_ac = vec3_sub(vector_a, vector_c);
+
+        // Compute the face normal using the cross product to find the
+        // perpendicular vector
+        vec3_t normal = vec3_cross(vector_ab, vector_ac);
+
+        // Find the vector between point a and the camera position
+        vec3_t camera_ray = vec3_sub(camera_position, vector_a);
+
+        // Calculate alignment between camera ray and face normal using dot
+        // product
+        float dot_normal_camera = vec3_dot(normal, camera_ray);
+
+        // Don't render the face if the dot product is less than zero.
+        if (dot_normal_camera < 0) {
+            continue;
+        }
+
+        triangle_t projected_triangle;
+
+        // Loop over the three vertices to perform the projection
+        for (int j = 0; j < 3; j++) {
             // Project the current vertex
-            vec2_t projected_point = project(transformed_vertex);
+            vec2_t projected_point = project(transformed_vertices[j]);
 
             // Scale and translate the projected points to the middle of the
             // screen
@@ -135,8 +162,8 @@ void update(void) {
 void render(void) {
     draw_grid(10);
 
-    uint32_t line_color = 0xFF33FF33;   // green
-    uint32_t point_color = 0xFFFFB000;  // amber
+    uint32_t line_color = 0xFF33FF33;  // green
+    /* uint32_t point_color = 0xFFFFB000;  // amber */
 
     int num_triangles = array_length(triangles_to_render);
 
@@ -147,12 +174,12 @@ void render(void) {
                       triangle.points[1].x, triangle.points[1].y,
                       triangle.points[2].x, triangle.points[2].y, line_color);
 
-        draw_rect(triangle.points[0].x, triangle.points[0].y, 3, 3,
-                  point_color);
-        draw_rect(triangle.points[1].x, triangle.points[1].y, 3, 3,
-                  point_color);
-        draw_rect(triangle.points[2].x, triangle.points[2].y, 3, 3,
-                  point_color);
+        /* draw_rect(triangle.points[0].x, triangle.points[0].y, 3, 3, */
+        /*           point_color); */
+        /* draw_rect(triangle.points[1].x, triangle.points[1].y, 3, 3, */
+        /*           point_color); */
+        /* draw_rect(triangle.points[2].x, triangle.points[2].y, 3, 3, */
+        /*           point_color); */
     }
 
     // Clear the array of triangles to render every frame loop
