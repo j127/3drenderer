@@ -368,3 +368,17 @@ The magnitude of the cross product is the magnitude of a times the magnitude of 
 ```
 
 To get the normal: (a - b) ⨯ (a - c)
+
+#### Dot Product
+
+a·b is the projection of b onto a.
+
+You can think of it as how aligned the vectors are. If they are the same, then the dot product will be 1.0. If they are perpendicular, the dot product will be 0.0. If the vectors start pointing away from each other, the dot product will be negative.
+
+```text
+a·b = a_x b_x + a_y b_y
+```
+
+#### Culling Algorithm
+
+The cross product shows where the face is pointing. The dot product shows whether the face is aligned with the camera.
