@@ -444,3 +444,5 @@ Gives the formula:
 Mx = ------------------ + x0
           (y2 - y0)
 ```
+
+![Rendering and culling modes example](./images/cube-modes.gif)
