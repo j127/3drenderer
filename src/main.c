@@ -38,7 +38,7 @@ void setup(void) {
                                              window_width, window_height);
 
     /* load_cube_mesh_data(); */
-    load_obj_file_data("./assets/f22.obj");
+    load_obj_file_data("./assets/cube.obj");
 }
 
 void process_input(void) {
@@ -168,27 +168,21 @@ void render(void) {
     uint32_t line_color = 0xFF33FF33;  // green
     /* uint32_t point_color = 0xFFFFB000;  // amber */
 
-    draw_filled_triangle(300, 100, 50, 400, 500, 700, 0xFF00FF00);
+    // draw_filled_triangle(300, 100, 50, 400, 500, 700, 0xFF00FF00);
 
-    /* int num_triangles = array_length(triangles_to_render); */
-    /* for (int i = 0; i < num_triangles; i++) { */
-    /*     triangle_t triangle = triangles_to_render[i]; */
+    int num_triangles = array_length(triangles_to_render);
+    for (int i = 0; i < num_triangles; i++) {
+        triangle_t triangle = triangles_to_render[i];
 
-    /*     draw_triangle(triangle.points[0].x, triangle.points[0].y, */
-    /*                   triangle.points[1].x, triangle.points[1].y, */
-    /*                   triangle.points[2].x, triangle.points[2].y,
-     * line_color); */
+        draw_filled_triangle(triangle.points[0].x, triangle.points[0].y,
+                             triangle.points[1].x, triangle.points[1].y,
+                             triangle.points[2].x, triangle.points[2].y,
+                             0xFF555555);
 
-    /*     /1* draw_rect(triangle.points[0].x, triangle.points[0].y, 3, 3, *1/
-     */
-    /*     /1*           point_color); *1/ */
-    /*     /1* draw_rect(triangle.points[1].x, triangle.points[1].y, 3, 3, *1/
-     */
-    /*     /1*           point_color); *1/ */
-    /*     /1* draw_rect(triangle.points[2].x, triangle.points[2].y, 3, 3, *1/
-     */
-    /*     /1*           point_color); *1/ */
-    /* } */
+        draw_triangle(triangle.points[0].x, triangle.points[0].y,
+                      triangle.points[1].x, triangle.points[1].y,
+                      triangle.points[2].x, triangle.points[2].y, 0xFF000000);
+    }
 
     // Clear the array of triangles to render every frame loop
     array_free(triangles_to_render);

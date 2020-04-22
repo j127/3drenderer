@@ -7,6 +7,8 @@ void int_swap(int* a, int* b) {
     *b = tmp;
 }
 
+// Draw a filled triangle with a flat bottom.
+//
 // Slope 1 is on the left, slope 2 is on the right. (x2,y2) is (Mx,My).
 //
 //          (x0, y0)
@@ -16,12 +18,13 @@ void int_swap(int* a, int* b) {
 //          /      \
 //         /        \
 //    (x1,y1)------(x2,y2)
+//
 void fill_flat_bottom_triangle(int x0, int y0, int x1, int y1, int x2, int y2,
                                uint32_t color) {
     float inverted_slope_1 = (float)(x1 - x0) / (y1 - y0);
     float inverted_slope_2 = (float)(x2 - x0) / (y2 - y0);
 
-    // Start x_start and x_end from the top vertext (x0,y0)
+    // Start x_start and x_end from the top vertex (x0,y0)
     float x_start = x0;
     float x_end = x0;
 
@@ -33,9 +36,11 @@ void fill_flat_bottom_triangle(int x0, int y0, int x1, int y1, int x2, int y2,
     }
 }
 
-// ...
+// Draw a filled triangle with a flat top.
 //
-//    (x1,y1)------(Mx,My)
+// (x1,y1) is (Mx,My) here.
+//
+//    (x0,y0)------(x1,y1)
 //        \_          \
 //           \_        \
 //              \_      \
@@ -45,9 +50,22 @@ void fill_flat_bottom_triangle(int x0, int y0, int x1, int y1, int x2, int y2,
 //                        \_\
 //                           \
 //                        (x2,y2)
+//
 void fill_flat_top_triangle(int x0, int y0, int x1, int y1, int x2, int y2,
                             uint32_t color) {
-    // TODO
+    float inverted_slope_1 = (float)(x2 - x0) / (y2 - y0);
+    float inverted_slope_2 = (float)(x2 - x1) / (y2 - y1);
+
+    // Start x_start and x_end from the bottom vertex (x2,y2)
+    float x_start = x2;
+    float x_end = x2;
+
+    // Loop over the scanlines from bottom to top
+    for (int y = y2; y >= y0; y--) {
+        draw_line(x_start, y, x_end, y, color);
+        x_start -= inverted_slope_1;
+        x_end -= inverted_slope_2;
+    }
 }
 
 // Draw a filled triangle with the flat-top/flat-bottom method.
